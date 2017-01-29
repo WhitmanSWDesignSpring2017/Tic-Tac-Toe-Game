@@ -1,3 +1,10 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package tictactoe2;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -6,28 +13,31 @@ import java.util.Scanner;
  * @author tmaule
  * @author pfernandez
  */
+
 public class TicTacToeGame  {
     
-	public int flag = 0;
     static Scanner reader = new Scanner(System.in);
-	private Scanner diff;
+    public int difficulty = 0; // 0 = default, 1 = easy, 2 = hard
+    private Scanner diff; // difficulty
 
-	/**
-	 * Plays the TicTacToe game. play() randomly determines which player (human or computer)
-	 * goes first, creates a new Board object, and initializes it as empty. It announces
-	 * which player goes first, and then asks the user to press any key and the enter key
-	 * to begin the game. Afterwards, the play() function proceeds with the first
-	 * turn (calling humanturn or computerturn), checks whether there is a win or tie, 
-	 * and then switches players and begins the next turn. The turns alternate until 
-	 * there is a win or a tie.
-	 * @throws TicTacToeBoard.SpaceTakenException
-	 */
+    /**
+    * Plays the TicTacToe game. play() randomly determines which player (human or computer)
+    * goes first, creates a new Board object, and initializes it as empty. It announces
+    * which player goes first, and then asks the user to press any key and the enter key
+    * to begin the game. Afterwards, the play() function proceeds with the first
+    * turn (calling humanturn or computerturn), checks whether there is a win or tie, 
+    * and then switches players and begins the next turn. The turns alternate until 
+    * there is a win or a tie.
+    * @throws TicTacToeBoard.SpaceTakenException
+    */
     public void play() throws TicTacToeBoard.SpaceTakenException{
+        
         boolean isHumanTurn = (Math.random() < 0.5);
         TicTacToeBoard board = new TicTacToeBoard();
-        //TicTacToeAI computer = new TicTacToeAI();
+        TicTacToeAI computer = new TicTacToeAI();
+
         board.initialize();
-        System.out.print("Let's Play Tic Tac Toe! \n");
+        System.out.print("--------------------------------------------------\n");
         System.out.print("You are X and the computer is 0.\n");
         if(isHumanTurn)
         {
@@ -42,8 +52,7 @@ public class TicTacToeGame  {
         	System.out.println("Press any key and 'enter' to begin. ");
         	Scanner user_input = new Scanner(System.in);
         	response = user_input.toString();
-        	if (response != null){
-        	reader.next();
+        	user_input.next();
         }
         
         while(true) {
@@ -51,10 +60,14 @@ public class TicTacToeGame  {
                 humanTurn(board);
             }
             else {
-            	if (flag==1){
-                computerTurn(board);
-            	} else if (flag==2){
-            	//call method to begin difficult version
+                if (difficulty==1){                    
+                    System.out.print("You are playing easy\n"); 
+
+                    computer.computerTurn(board);
+            	} else if (difficulty==2){
+                    System.out.print("You are playing hard\n"); 
+                    System.out.print("The computer will be using AI to evaluate the game.\n");
+                    computer.computerTurn(board);
             	}
             }
             board.printBoard();
@@ -74,9 +87,8 @@ public class TicTacToeGame  {
             }
             isHumanTurn = !isHumanTurn;
         }    
-      System.out.println("=== GAME OVER ===");
-      user_input.close();
-        }
+      System.out.println("=== GAME OVER ===");   
+      reader.close();
     }
     
     /**
@@ -84,8 +96,9 @@ public class TicTacToeGame  {
      * to place the marker
      * @param row0rColumn
      * @param size 
+     * @return input
      */
-    public static int getInput(String row0rColumn, int size) {
+    public int getInput(String row0rColumn, int size) {
         while(true){
             System.out.println("What " + row0rColumn + "? (1-" + size + ")");
             try {
@@ -93,6 +106,7 @@ public class TicTacToeGame  {
                 if((input<1) || (input>3)) {
                     System.out.println("Please enter a number in the range.");
                     reader.nextLine();
+
                     continue;
                 }
                 return input;
@@ -101,7 +115,6 @@ public class TicTacToeGame  {
                 System.out.println("Please enter an integer.");
                 reader.nextLine();
 
-                continue;
             }
         }
     }    
@@ -112,72 +125,52 @@ public class TicTacToeGame  {
      * @param board
      * @throws TicTacToeBoard.SpaceTakenException
      */
-    public static void humanTurn(TicTacToeBoard board) throws TicTacToeBoard.SpaceTakenException{
+    public void humanTurn(TicTacToeBoard board) throws TicTacToeBoard.SpaceTakenException {
       System.out.println("It's your turn.");  
       while(true){
           int row = getInput("row", 3);
           int column = getInput("column", 3);
-                  
           try {
             board.markSpace(row-1, column-1, 'X');
             System.out.println("You mark ("+(row)+","+(column)+").");
           	return;
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("The space is out of bounds. Please try again.");
-          } catch (TicTacToeBoard.SpaceTakenException e) {
+            } catch (TicTacToeBoard.SpaceTakenException e) {
                 System.out.println("That space is taken. Please choose another space.");
-          }	  
-          }
-       
+            }
+          
+        	  
+          }  
     }    
-   
-    /**
-     * The computer randomly selects two integers, representing row and column. Afterwards, the computer tests if 
-     * the spot is open. If so, it will mark a '0' there. Otherwise, it will throw a SpaceTakenException, and
-     * recalculate new rows and columns until it finds an open space (if there is no open space, a tie will be
-     * indicated)
-     * @param board
-     * @throws TicTacToeBoard.SpaceTakenException
-     */
-    public static void computerTurn(TicTacToeBoard board) throws TicTacToeBoard.SpaceTakenException{
-    	int row;
-    	int column;
-        while(true){
-            row    = (int)(Math.random()*3);
-            column = (int)(Math.random()*3);
-            System.out.println("The computer wants to mark " + Integer.toString(row+1) +","+ Integer.toString(column+1));
-            try {
-            	board.markSpace(row, column, '0');
-                System.out.println("The computer marks (" + Integer.toString(row+1) +","+ Integer.toString(column+1)+").");
-                return;
-            } catch (TicTacToeBoard.SpaceTakenException e){
-            	continue;
-            } 
-        }
-    } 
     
+    /**
+     * askLevel takes no parameters and returns nothing; it simply
+     * asks for user input on what level of difficulty they want to play,
+     * and accordingly modifies the public variable "difficulty"
+     */
     public void askLevel(){
-    	System.out.println("Which level of difficulty? 1 -> easy, 2 -> Hard");
-    	while (flag != 1 && flag != 2){
+    	System.out.println("Which level of difficulty? 1 -> Easy, 2 -> Hard");
+    	while (difficulty != 1 && difficulty != 2){
         	diff = new Scanner(System.in);
-        	flag = diff.nextInt();
-        	if (flag == 1 || flag == 2){
+        	difficulty = diff.nextInt();
+        	if (difficulty == 1 || difficulty == 2){
         		break;
         	}
     	}
-    	//diff.close();
-    }
+    }  
     
     /**
      * Main function that runs when the project is run; calls 'play()' to begin playing the game.
      *
      * @param args the command line arguments
-     * @throws SpaceTakenException 
-     */
+     * @throws TicTacToeBoard.SpaceTakenException 
+     */    
     public static void main(String[] args) throws TicTacToeBoard.SpaceTakenException {
-    	System.out.println("Let's play Tic Tac Toe! \n");
-    	TicTacToeGame Game = new TicTacToeGame();
-    	Game.askLevel();
+        System.out.print("TicTacToe Game\n");
+        TicTacToeGame Game = new TicTacToeGame();
+        Game.askLevel();
     	Game.play();
-    }   
+    }
+    
 }
