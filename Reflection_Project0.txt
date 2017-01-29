@@ -15,4 +15,4 @@ I think we simplified the design in some areas; instead of creating a separate m
 
 How did you and your partner share the work? What did each team member contribute?
 
-We usually worked collaboratively, but alternated on different parts of the code. For example, Tyler focused more on the Board, whereas Pablo spent more time with the Game class. While Pablo used knowledge from his Artificial Intelligence class to fulfill the stretch goal (TicTacToeBoardAI), Tyler prepared the nearlyWonBy() method and spent some time debugging/testing the code as a whole.
+We usually worked collaboratively, but alternated on different parts of the code. For example, Tyler focused more on the Board, whereas Pablo spent more time with the Game class. While Pablo used knowledge from his Artificial Intelligence class to fulfill the stretch goal (TicTacToeBoardAI), Tyler created the nearlyWonBy() method and spent some time debugging/testing the code as a whole.
