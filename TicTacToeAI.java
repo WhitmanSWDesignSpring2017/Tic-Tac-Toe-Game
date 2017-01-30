@@ -14,7 +14,9 @@ import java.util.List;
      * a position based on the prefered moves heuristic, which can be overridden if a win or a loss is available. 
      * In simple mode, the AI is only used 40% of the time in order to allow the human to win sometimes. 
      * In impossible mode, the human will never be able to win the game, due to the three heuristics. 
-     * indicated)
+     * 
+     * Part of the AI is built into the markSpace() and nearlyWonBy() functions in the Board file. 
+     *
      * @param board
      * @throws TicTacToeBoard.SpaceTakenException
      */
