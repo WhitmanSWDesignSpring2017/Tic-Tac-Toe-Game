@@ -10,9 +10,10 @@ import java.util.List;
  */
 
     /**
-     * The computer randomly selects two integers, representing row and column. Afterwards, the computer tests if 
-     * the spot is open. If so, it will mark a '0' there. Otherwise, it will throw a SpaceTakenException, and
-     * recalculate new rows and columns until it finds an open space (if there is no open space, a tie will be
+     * The system uses either easy and impossible modes, tests to see which spots are available, and choses 
+     * a position based on the prefered moves heuristic, which can be overridden if a win or a loss is available. 
+     * In simple mode, the AI is only used 40% of the time in order to allow the human to win sometimes. 
+     * In impossible mode, the human will never be able to win the game, due to the three heuristics. 
      * indicated)
      * @param board
      * @throws TicTacToeBoard.SpaceTakenException
