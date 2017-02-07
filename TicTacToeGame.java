@@ -1,11 +1,12 @@
 package tictactoe2;
+//NOTE: Source and class files should be in a directory that matches the package name
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 
+ * //TODO: What's the purpose of this class?
  * @author tmaule
  * @author pfernandez
  */
@@ -14,7 +15,8 @@ public class TicTacToeGame  {
     
     static Scanner reader = new Scanner(System.in);
     public static int difficulty = 0; // 0 = default, 1 = easy, 2 = hard
-    private Scanner diff; // difficulty
+    private Scanner diff; // difficulty //TODO: Why do you need two different scanners?
+    //NOTE: The use of color is a nice touch. You appropriately set them as constants.
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -40,7 +42,8 @@ public class TicTacToeGame  {
         boolean isHumanTurn = (Math.random() < 0.5);
         TicTacToeBoard board = new TicTacToeBoard();
         TicTacToeAI computer = new TicTacToeAI();
-
+        
+        //TODO: This method is long and hard to read. Refactor into several more methods and/or fewer conditionals.
         board.initialize();
         if(isHumanTurn)
         {
@@ -119,6 +122,7 @@ public class TicTacToeGame  {
      * @param size 
      * @return input
      */
+    //TODO: Could this method be static?
     public int getInput(String row0rColumn, int size) {
         while(true){
             System.out.print(ANSI_PURPLE + "What " + row0rColumn + "? (1-" + size + "): " + ANSI_RESET);
@@ -143,8 +147,9 @@ public class TicTacToeGame  {
     /**
      * Accomplishes and reports the placing of an 'X' mark
      * on the TicTacToe Board in the spot that the human chose.
-     * @param board
+     * @param board //TODO: Document all parameters. Actually I'd make this one an attribute of TicTacToeGame objects.
      * @throws TicTacToeBoard.SpaceTakenException
+     //TODO: Does not throw a SpaceTakenException, as that exception is caught
      */
     public void humanTurn(TicTacToeBoard board) throws TicTacToeBoard.SpaceTakenException {
       System.out.println("It's your turn.");  
