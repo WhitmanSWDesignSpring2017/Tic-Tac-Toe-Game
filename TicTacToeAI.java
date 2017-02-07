@@ -9,6 +9,7 @@ import java.util.List;
  * @author pfernandez
  */
 
+    //TODO: I'm not sure what the following comment is supposed to be attached to.
     /**
      * The system uses either easy and impossible modes, tests to see which spots are available, and choses 
      * a position based on the prefered moves heuristic, which can be overridden if a win or a loss is available. 
@@ -36,7 +37,7 @@ public class TicTacToeAI {
          * chance of winning
          */
         
-        // Simulate all that hard thinking!
+        // Simulate all that hard thinking! //NOTE: HAHA!
         try {
             Thread.sleep(1400);
         } catch(InterruptedException ex) {
@@ -47,6 +48,7 @@ public class TicTacToeAI {
     	int column;
         int [] heuristic = {-1,1};
                
+        //NOTE: Nice use of foreach loop
         for (int[] move : preferredMoves) {
             row = move[0];
             column = move[1];
