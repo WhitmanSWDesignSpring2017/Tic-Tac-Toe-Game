@@ -8,7 +8,7 @@
 package tictactoe2;
 
 /**
- * 
+ * //TODO: What is the purpose of this class?
  * @author tmaule
  * @author pfernandez
  */
@@ -21,6 +21,7 @@ public class TicTacToeBoard {
 	static int size = 3;
         public char[][] board;
         
+	//TODO: Avoid duplicating constants
         public static final String ANSI_RESET = "\u001B[0m";
         public static final String ANSI_BLACK = "\u001B[30m";
         public static final String ANSI_RED = "\u001B[31m";
@@ -37,7 +38,7 @@ public class TicTacToeBoard {
 	 * @author tmaule
 	 *
 	 */
-        
+        //TODO: No space between javadoc comment and method implementation. Fix indentation.
         public class SpaceTakenException extends Exception {
 		private static final long serialVersionUID = 1L;
 		}
@@ -48,6 +49,7 @@ public class TicTacToeBoard {
 	 * three by three, and fills it with space characters.
 	 */
 	public void initialize(){
+		//TODO: Use consistent indentation.
 		this.board = new char[3][3];
 			for (int i=0;i<3;i++){
 				for (int j=0;j<3;j++){
@@ -91,9 +93,10 @@ public class TicTacToeBoard {
 	 * an integer, column, an integer. Returns 'true' 
 	 * if the integers are between 0 and 2, and 
 	 * the space they reference is open.
-	 * @param row
+	 * @param row 
 	 * @param column
 	 * @return
+	 //TODO: Document the purpose of parameters and return values
 	 */
         
 	public boolean isOpen(int row, int column){
@@ -134,14 +137,17 @@ public class TicTacToeBoard {
 			}		
 		}
 		if ((row>3)||(column>3)){
+			//TODO: Throw an IndexOutOfBoundsException, or allow line 148 to throw it.
 			System.out.println("Out of bounds!");
 			return false;
 		} else if (board[row][column]!=' '){
+			//TODO: Delete the next line
 			System.out.println("SpaceTaken throw an exception here");
 			throw new SpaceTakenException();
 		} else {
 		board[row][column] = mark;
 		}
+		//TODO: Magic number next line
 		if (mark=='0'){System.out.println("\033[0;1m" + "The computer marks (" + 
 				(row+1) + "," + (column+1) + ")");}
 		return true;
@@ -173,6 +179,7 @@ public class TicTacToeBoard {
 	 * @return
 	 */    
 	public boolean isWonBy(char mark){
+		//TODO: This needs some internal comments to explain
 		for (int i=0; i <size; i++){
 			char[] row={' ',' ',' '};
 			for (int j=0; j<size; j++){
@@ -216,7 +223,7 @@ public class TicTacToeBoard {
 	 * @param mark
 	 * @return
 	 */
-        
+        //TODO: Could this be static?
 	public boolean match(char[] spaces, char mark){
 		for (int s = 0; s < 3; s++){
 			if (spaces[s]!= mark){
@@ -237,6 +244,7 @@ public class TicTacToeBoard {
 	* @return
 	*/    
 	public List<Integer> nearlyWonBy(char mark){
+		//TODO: Long complicated method. Refactor or comment? Does it belong in this class?
 			int count;
 			List<Integer> locations = new ArrayList<Integer>();		
 			for (int i=0; i <3; i++){
